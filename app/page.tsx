@@ -58,14 +58,58 @@ export default function LinkedInScraper() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent, isDemo = false) => {
     e.preventDefault();
-    if (!query.trim()) return;
+    if (!query.trim() && !isDemo) return;
 
     setIsSearching(true);
     setError(null);
     setPosts([]);
     setActiveTab(0);
+
+    if (isDemo) {
+      setQuery("Elon Musk");
+      setSearchType("person");
+      // Simulate network delay
+      await new Promise(r => setTimeout(r, 1500));
+      const demoPosts: LinkedInPost[] = [
+        {
+          id: "demo-1",
+          author: "Tech Insider",
+          url: "https://www.linkedin.com/posts/elon-musk-ai-future",
+          content: "Spotted: Elon Musk discussing the future of neural interfaces at the latest tech summit. The implications for human-computer interaction are staggering.",
+          date: format(new Date(), 'yyyy-MM-dd'),
+          relevance: "Direct mention of subject in a high-engagement tech discussion."
+        },
+        {
+          id: "demo-2",
+          author: "Future Systems",
+          url: "https://www.linkedin.com/posts/robotics-musk-impact",
+          content: "How the latest Mars mission plans are reshaping our perspective on interplanetary travel. Mention of SpaceX's recent milestones.",
+          date: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
+          relevance: "Relevant industry mention related to subject's core ventures."
+        },
+        {
+          id: "demo-3",
+          author: "Global Business Review",
+          url: "https://www.linkedin.com/posts/leadership-musk-style",
+          content: "Analysis: Leadership styles that define the 21st century. Case study on Tesla's rapid growth and market disruption.",
+          date: format(subMonths(new Date(), 2), 'yyyy-MM-dd'),
+          relevance: "Business analysis citing subject as a key figure."
+        },
+        {
+          id: "demo-4",
+          author: "AI Ethics Daily",
+          url: "https://www.linkedin.com/posts/ai-musk-opinion",
+          content: "Important discussion today on AI safety protocols. Citing Musk's recent warnings about unregulated AGI development.",
+          date: format(subMonths(new Date(), 3), 'yyyy-MM-dd'),
+          relevance: "Topical mention in specialized field."
+        }
+      ];
+      setPosts(demoPosts);
+      setIsSearching(false);
+      return;
+    }
 
     try {
       const sixMonthsAgo = format(subMonths(new Date(), 6), 'yyyy-MM-dd');
@@ -181,7 +225,7 @@ export default function LinkedInScraper() {
 
         {/* Search Station */}
         <section className="mb-20">
-          <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
+          <form onSubmit={(e) => handleSearch(e)} className="max-w-3xl mx-auto">
             <div className="flex flex-col gap-4 p-2 bg-zinc-900/50 border border-white/10 rounded-2xl shadow-2xl">
               <div className="flex items-center gap-4 px-4 py-2">
                 <Search className="w-6 h-6 text-slate-500" />
@@ -192,13 +236,24 @@ export default function LinkedInScraper() {
                   placeholder={`Enter ${searchType} name to track...`}
                   className="w-full bg-transparent text-xl md:text-2xl font-medium outline-none placeholder:text-slate-600 text-white"
                 />
-                <button 
-                  type="submit" 
-                  disabled={isSearching}
-                  className="bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-xl transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50 flex items-center gap-2 px-6"
-                >
-                  {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Zap className="w-5 h-5" /> <span className="hidden md:inline font-bold uppercase tracking-wider text-xs">Analyze</span></>}
-                </button>
+                <div className="flex gap-2">
+                   <button 
+                    onClick={(e) => handleSearch(e, true)}
+                    type="button" 
+                    disabled={isSearching}
+                    className="border border-white/10 hover:bg-white/5 text-white p-3 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2 px-4 whitespace-nowrap"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-400" /> 
+                    <span className="font-bold uppercase tracking-wider text-[10px]">Try Demo</span>
+                  </button>
+                  <button 
+                    type="submit" 
+                    disabled={isSearching}
+                    className="bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-xl transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50 flex items-center gap-2 px-6"
+                  >
+                    {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Zap className="w-5 h-5" /> <span className="hidden md:inline font-bold uppercase tracking-wider text-xs">Analyze</span></>}
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-between p-2 border-t border-white/5 bg-zinc-950/30 rounded-b-xl">
