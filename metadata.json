@@ -1,0 +1,5 @@
+{
+  "name": "LinkedIn Mention Finder",
+  "description": "Find and analyze LinkedIn posts mentioning specific people or companies from the last 6 months using AI-powered search.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0077B5;
+  --color-primary-glow: rgba(0, 119, 181, 0.4);
+  --color-surface-bg: #0A0A0B;
+  --color-surface-elevated: #161618;
+  --color-glass-bg: rgba(22, 22, 24, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-surface-bg text-slate-200 antialiased selection:bg-primary/30 selection:text-white;
+    font-family: 'Outfit', 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .glass-card {
+    @apply bg-glass-bg backdrop-blur-md border border-glass-border;
+  }
+
+  .glow-shadow {
+    box-shadow: 0 0 20px var(--color-primary-glow);
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
