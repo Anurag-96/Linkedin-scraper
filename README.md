@@ -4,7 +4,7 @@ A premium, AI-powered intelligence platform built to scan and analyze public Lin
 
 ## 🚀 Quick Preview (Recruiter Friendly)
 No API keys? No problem.
-1. **Visit (https://mentions.netlify.app/).app**
+1. **Visit (https://mentions.netlify.app/)
 2. Click the **"Try Demo"** button in the search bar.
 3. Experience the full glassmorphic UI, smooth micro-animations, and AI-driven insights with pre-rendered data.
 
